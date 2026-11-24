@@ -1,0 +1,10 @@
+.git
+.env
+**/target
+**/node_modules
+**/__pycache__
+**/*.pyc
+docs
+README.md
+NOTICE.md
+*.zip

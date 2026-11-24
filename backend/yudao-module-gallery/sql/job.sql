@@ -1,0 +1,11 @@
+-- 每个会议一个「每日发现新论文」定时任务（2026-11-23 起，共 10 个）：
+--   id 90003-90012，处理器 galleryCrawlJob<Venue>，参数 2026,100，每天 03:30 起每 5 分钟一个。
+--
+-- 注意：直接向 infra_job 灌 SQL 不会在 Quartz 中生成触发器（点“开启”也无效果）。
+-- 请通过后台「基础设施 -> 定时任务 -> 新增」，或调用：
+--   POST /admin-api/infra/job/create
+--   {"name":"画廊-每日发现新论文-ICLR","handlerName":"galleryCrawlJobIclr",
+--    "handlerParam":"2026,100","cronExpression":"0 30 3 * * ?",
+--    "retryCount":0,"retryInterval":0,"monitorTimeout":0}
+--
+-- 新增会议时：在 GalleryCrawlJobConfig 里加一个 handler Bean，再按上面的方式建任务即可。

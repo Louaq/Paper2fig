@@ -1,0 +1,1 @@
+import{t as e}from"./Error-BsCf3eFk.js";import{Fi as t,Oa as n,Oi as r,Qi as i,ha as a,m as o,zi as s}from"./vendor-initial-C0463wVK.js";s(),a();var c=t({name:`Error500`,__name:`500`,setup(t){let{push:a}=o();return(t,o)=>{let s=e;return i(),r(s,{type:`500`,onErrorClick:o[0]||=e=>n(a)(`/`)})}}});export{c as default};

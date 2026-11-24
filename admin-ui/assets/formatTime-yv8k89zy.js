@@ -1,0 +1,1 @@
+import{o as e}from"./rolldown-runtime-BCiCTKAo.js";import{t}from"./dayjs.min-Cy9iAhkJ.js";var n=e(t());function r(e,t){return e&&e?(0,n.default)(e).format(t??`YYYY-MM-DD HH:mm:ss`):``}function i(e,t,n){return n?r(n):``}export{r as n,i as t};

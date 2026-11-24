@@ -1,0 +1,1 @@
+import{Wi as e,Yi as t,zi as n}from"./vendor-initial-C0463wVK.js";n();var r=n=>{let r=!0;t(()=>{n()}),e(()=>{r?r=!1:n()})};export{r as t};

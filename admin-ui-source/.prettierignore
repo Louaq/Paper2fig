@@ -1,0 +1,11 @@
+**/node_modules/**
+**/dist/**
+**/dist-*/**
+/dist*
+**/.vitepress/cache/**
+**/public/**
+/CHANGELOG.md
+/pnpm-lock.yaml
+/src/types/auto-components.d.ts
+/src/types/auto-imports.d.ts
+/src/components/Tinyflow/ui/**

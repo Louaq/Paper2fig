@@ -1,0 +1,115 @@
+{
+  "venues" : [ {
+    "value" : "cvpr",
+    "labelZh" : "CVPR",
+    "labelEn" : "CVPR",
+    "label" : "CVPR"
+  }, {
+    "value" : "aaai",
+    "labelZh" : "AAAI",
+    "labelEn" : "AAAI",
+    "label" : "AAAI"
+  }, {
+    "value" : "miccai",
+    "labelZh" : "MICCAI",
+    "labelEn" : "MICCAI",
+    "label" : "MICCAI"
+  }, {
+    "value" : "mm",
+    "labelZh" : "ACM MM",
+    "labelEn" : "ACM MM",
+    "label" : "ACM MM"
+  }, {
+    "value" : "neurips",
+    "labelZh" : "NeurIPS",
+    "labelEn" : "NeurIPS",
+    "label" : "NeurIPS"
+  }, {
+    "value" : "eccv",
+    "labelZh" : "ECCV",
+    "labelEn" : "ECCV",
+    "label" : "ECCV"
+  }, {
+    "value" : "iclr",
+    "labelZh" : "ICLR",
+    "labelEn" : "ICLR",
+    "label" : "ICLR"
+  }, {
+    "value" : "icml",
+    "labelZh" : "ICML",
+    "labelEn" : "ICML",
+    "label" : "ICML"
+  }, {
+    "value" : "acl",
+    "labelZh" : "ACL",
+    "labelEn" : "ACL",
+    "label" : "ACL"
+  }, {
+    "value" : "ijcai",
+    "labelZh" : "IJCAI",
+    "labelEn" : "IJCAI",
+    "label" : "IJCAI"
+  }, {
+    "value" : "icme",
+    "labelZh" : "ICME",
+    "labelEn" : "ICME",
+    "label" : "ICME"
+  } ],
+  "years" : [ {
+    "value" : 2027
+  }, {
+    "value" : 2026
+  }, {
+    "value" : 2025
+  }, {
+    "value" : 2024
+  }, {
+    "value" : 2023
+  } ],
+  "tiers" : [ {
+    "value" : "best",
+    "labelZh" : "最佳论文",
+    "labelEn" : "Best Paper"
+  }, {
+    "value" : "oral",
+    "labelZh" : "口头报告",
+    "labelEn" : "Oral"
+  }, {
+    "value" : "spotlight",
+    "labelZh" : "焦点论文",
+    "labelEn" : "Spotlight"
+  } ],
+  "patterns" : [ {
+    "value" : "teaser",
+    "labelZh" : "主视觉",
+    "labelEn" : "Teaser"
+  }, {
+    "value" : "conceptual",
+    "labelZh" : "概念图",
+    "labelEn" : "Conceptual"
+  }, {
+    "value" : "framework",
+    "labelZh" : "框架总览",
+    "labelEn" : "Framework"
+  }, {
+    "value" : "pipeline",
+    "labelZh" : "流程图",
+    "labelEn" : "Pipeline"
+  }, {
+    "value" : "architecture",
+    "labelZh" : "架构图",
+    "labelEn" : "Architecture"
+  }, {
+    "value" : "taxonomy",
+    "labelZh" : "全景 / 基准",
+    "labelEn" : "Taxonomy / Benchmark"
+  }, {
+    "value" : "results",
+    "labelZh" : "结果",
+    "labelEn" : "Results"
+  }, {
+    "value" : "comparison",
+    "labelZh" : "对比",
+    "labelEn" : "Comparison"
+  } ]
+}

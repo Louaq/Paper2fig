@@ -1,0 +1,106 @@
+name: paper2fig
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: yudao
+      MYSQL_USER: yudao
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: Asia/Shanghai
+      # consumed by deploy/mysql/init/03-bootstrap.sh
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8080}
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./deploy/mysql/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$$REDIS_PASSWORD\" ping | grep -q PONG"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.57.0
+    restart: unless-stopped
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      MEILI_ENV: production
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meili-data:/meili_data
+
+  admin-api:
+    build:
+      context: .
+      dockerfile: deploy/backend/Dockerfile
+    image: paper2fig-admin-api:local
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: local,docker
+      DB_URL: "jdbc:mysql://mysql:3306/yudao?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true"
+      DB_USERNAME: yudao
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8080}
+      JAVA_OPTS: ${JAVA_OPTS:--Xmx512m -XX:MaxMetaspaceSize=256m -XX:+UseSerialGC}
+      TZ: Asia/Shanghai
+    volumes:
+      - site-data:/opt/1panel/www/sites/louaq.net/index
+      - files-data:/opt/1panel/www/sites/louaq.net/files
+      - backups-data:/opt/backups
+      - pipeline-workspace:/opt/apps/gallery-pipeline/workspace
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      meilisearch:
+        condition: service_started
+
+  web:
+    build:
+      context: .
+      dockerfile: deploy/web/Dockerfile
+    image: paper2fig-web:local
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-8080}:80"
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+    volumes:
+      - site-data:/opt/1panel/www/sites/louaq.net/index
+      - files-data:/opt/1panel/www/sites/louaq.net/files:ro
+    depends_on:
+      - admin-api
+      - meilisearch
+
+volumes:
+  mysql-data:
+  redis-data:
+  meili-data:
+  site-data:
+  files-data:
+  backups-data:
+  pipeline-workspace:

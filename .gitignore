@@ -1,0 +1,14 @@
+.env
+.DS_Store
+*.log
+**/target/
+**/node_modules/
+**/__pycache__/
+*.pyc
+admin-ui-source/dist/
+admin-ui-source/dist-prod/
+site/images/**/*.jpg
+site/images/**/*.jpeg
+site/images/**/*.webp
+site/images/**/*.png
+!site/images/**/.gitkeep

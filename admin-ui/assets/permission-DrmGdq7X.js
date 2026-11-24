@@ -1,0 +1,1 @@
+import"./useI18n-D300FNGL.js";import{r as e}from"./index-JqRYk0PS.js";function t(t){return e(t)}export{t};

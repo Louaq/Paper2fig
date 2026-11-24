@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paper2fig · 顶会论文主图灵感画廊</title>
+    <meta
+      name="description"
+      content="Paper2fig 收录 3477 张 AI 顶会（CVPR、NeurIPS、ICLR、ICML、ACL、AAAI 等）论文的 Figure 1 与 teaser 主图，支持按会议、年份、论文等级与图形类型检索，可查看原图并跳转论文。"
+    />
+    <link rel="canonical" href="https://example.com/" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Paper2fig" />
+    <meta property="og:title" content="Paper2fig · 顶会论文主图灵感画廊" />
+    <meta property="og:description" content="检索 3477 张 AI 顶会论文的 Figure 1 与 teaser 主图：CVPR、NeurIPS、ICLR、ICML、ACL、AAAI 等。" />
+    <meta property="og:url" content="https://example.com/" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Paper2fig · 顶会论文主图灵感画廊" />
+    <meta name="twitter:description" content="检索 3477 张 AI 顶会论文的 Figure 1 与 teaser 主图。" />
+    <link rel="icon" href="/favicon.ico" />
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/fonts.css?v=20261123" />
+    <link rel="stylesheet" href="assets/style.css?v=20261124-inspector2" />
+
+    <!-- Deferred scripts run in dependency order after the document is parsed. -->
+    <script defer src="assets/i18n.js?v=20261124"></script>
+    <script defer src="assets/i18n_gallery.js?v=20261124-inspector1"></script>
+    <script defer src="assets/site-config.js?v=20261124"></script>
+    <script defer src="assets/figures.js?v=20261124"></script>
+    <script defer src="assets/app.js?v=20261124-inspector2"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="./" aria-label="Paper2fig">Paper2fig</a>
+        <form class="header-search" role="search">
+          <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="10.5" cy="10.5" r="6.5" />
+              <path d="m16 16 4.5 4.5" /></svg
+            ><input
+              id="search"
+              type="search"
+              data-i18n-ph="search.ph"
+              data-i18n-aria="search.ph"
+              autocomplete="off"
+            /><button
+              id="clear-search"
+              class="clear-btn"
+              type="button"
+              data-i18n-aria="ui.clear"
+              hidden
+            >
+              &times;</button
+            ><button class="search-submit" type="submit" data-i18n="ui.searchButton"></button>
+          </div>
+        </form>
+        <div class="header-actions">
+          <button id="lang-toggle" class="lang-toggle" type="button" title="Switch language">EN</button>
+        </div>
+      </div>
+    </header>
+    <main class="workspace" id="browse">
+      <section class="collection" aria-labelledby="collection-heading">
+        <div class="gallery-toolbar">
+          <div>
+            <h2 id="collection-heading" data-i18n="ui.collection"></h2>
+          </div>
+          <div class="hero-stats" id="hero-stats">
+            <span class="stat-figures"><b id="total-figures">&mdash;</b> <span data-i18n="ui.figures"></span></span
+            ><span class="stat-best"><b id="total-best">&mdash;</b> Best Paper</span
+            ><span class="stat-oral"><b id="total-oral">&mdash;</b> Oral</span
+            ><span class="stat-spotlight"><b id="total-spotlight">&mdash;</b> Spotlight</span>
+          </div>
+          <div class="gallery-controls">
+            <button
+              id="toggle-filters"
+              type="button"
+              class="filter-toggle"
+              aria-expanded="true"
+              aria-controls="filter-options"
+            >
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M5 10h10M7 15h6" /></svg
+              ><span data-i18n="ui.filters"></span>
+            </button>
+            <div class="sort-wrap">
+              <label for="sort" data-i18n="sort.label"></label
+              ><select id="sort">
+                <option value="venue" data-i18n="sort.venue"></option>
+                <option value="year" data-i18n="sort.year"></option>
+                <option value="title" data-i18n="sort.title"></option>
+              </select>
+            </div>
+            <div class="view-switch" role="group" data-i18n-aria="ui.view">
+              <button
+                type="button"
+                class="view-button active"
+                data-view="comfortable"
+                aria-pressed="true"
+                data-i18n-title="ui.comfortable"
+                data-i18n-aria="ui.comfortable"
+              >
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M2 2h6v6H2zM12 2h6v6h-6zM2 12h6v6H2zM12 12h6v6h-6z" />
+                </svg></button
+              ><button
+                type="button"
+                class="view-button"
+                data-view="compact"
+                aria-pressed="false"
+                data-i18n-title="ui.compact"
+                data-i18n-aria="ui.compact"
+              >
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path
+                    d="M1 2h4v6H1zM8 2h4v6H8zM15 2h4v6h-4zM1 12h4v6H1zM8 12h4v6H8zM15 12h4v6h-4z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="venue-filter">
+          <div class="chips" id="venue-chips" role="group" aria-label="venue filter"></div>
+        </div>
+        <div class="filter-panel" id="filter-options">
+          <div class="filter-row">
+            <h3 class="filter-label" data-i18n="fl.year"></h3>
+            <div class="chips" id="year-chips" role="group" aria-label="year filter"></div>
+          </div>
+          <div class="filter-row">
+            <h3 class="filter-label" data-i18n="fl.tier"></h3>
+            <div class="chips" id="tier-chips" role="group" aria-label="tier filter"></div>
+          </div>
+          <div class="filter-row">
+            <h3 class="filter-label" data-i18n="fl.pattern"></h3>
+            <div class="chips" id="pattern-chips" role="group" aria-label="pattern filter"></div>
+          </div>
+          <button
+            id="reset-filters"
+            class="reset-filters"
+            type="button"
+            data-i18n="ui.reset"
+          ></button>
+        </div>
+        <div id="gallery" class="masonry" aria-live="polite"></div>
+        <nav id="pagination" class="pagination" data-i18n-aria="page.nav" hidden></nav>
+        <div id="empty" class="empty-state" hidden>
+          <div class="empty-emoji">&#8981;</div>
+          <p data-i18n="empty.text"></p>
+          <button id="reset-all" class="ghost-btn" data-i18n="empty.reset"></button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="about-gallery">
+      <div class="footer-inner">
+        <section>
+          <h3 data-i18n="footer.about.h"></h3>
+          <p data-i18n-html="footer.about"></p>
+        </section>
+      </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" hidden>
+      <div class="lightbox-backdrop"></div>
+      <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-label="figure details">
+        <button class="lightbox-close" id="lb-close" data-i18n-aria="aria.close">×</button>
+        <span id="lb-ribbon-target" class="ribbon ribbon-target" aria-hidden="true"></span>
+        <div class="lightbox-content">
+          <div class="lightbox-img-wrap">
+            <div class="inspector-toolbar" role="toolbar" data-i18n-aria="lb.zoomToolbar">
+              <button
+                id="lb-zoom-out"
+                class="inspector-btn"
+                type="button"
+                data-i18n-aria="lb.zoomOut"
+                data-i18n-title="lb.zoomOut"
+              >
+                &minus;
+              </button>
+              <output id="lb-zoom-level" class="inspector-zoom" aria-live="off">100%</output>
+              <button
+                id="lb-zoom-in"
+                class="inspector-btn"
+                type="button"
+                data-i18n-aria="lb.zoomIn"
+                data-i18n-title="lb.zoomIn"
+              >
+                +
+              </button>
+              <span class="inspector-divider" aria-hidden="true"></span>
+              <button
+                id="lb-zoom-fit"
+                class="inspector-fit"
+                type="button"
+                data-i18n="lb.fit"
+                data-i18n-title="lb.fit"
+              ></button>
+            </div>
+            <div id="lb-viewport" class="inspector-viewport">
+              <div id="lb-stage" class="inspector-stage">
+                <img id="lb-img" src="" alt="" draggable="false" decoding="async" />
+              </div>
+            </div>
+            <p class="inspector-hint" data-i18n="lb.hint"></p>
+          </div>
+          <div class="lightbox-meta">
+            <div class="lb-badges">
+              <span id="lb-award" class="badge tier-badge" hidden></span
+              ><span id="lb-tier" class="badge tier-badge" hidden></span
+              ><span id="lb-venue" class="badge"></span><span id="lb-year" class="badge year"></span
+              ><span id="lb-pattern" class="badge pattern"></span>
+            </div>
+            <h2 id="lb-title"></h2>
+            <p id="lb-authors" class="lb-authors"></p>
+            <div class="lb-actions">
+              <a
+                id="lb-image"
+                class="ghost-btn"
+                target="_blank"
+                rel="noopener"
+                data-i18n="lb.viewImage"
+              ></a>
+              <a
+                id="lb-paper"
+                class="primary-btn"
+                target="_blank"
+                rel="noopener"
+                data-i18n="lb.openPaper"
+              ></a>
+              <span id="lb-separator-target" class="lb-separator-target" aria-hidden="true">/</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button
+      id="back-to-top"
+      class="back-to-top"
+      type="button"
+      data-i18n-aria="ui.backToTop"
+      data-i18n-title="ui.backToTop"
+      hidden
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 19V5m-6 6 6-6 6 6" />
+      </svg>
+    </button>
+  </body>
+</html>

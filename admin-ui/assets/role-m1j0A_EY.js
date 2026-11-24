@@ -1,0 +1,1 @@
+import{t as e}from"./axios-BOCPiSDH.js";var t=async t=>await e.get({url:`/system/role/page`,params:t}),n=async()=>await e.get({url:`/system/role/simple-list`}),r=async t=>await e.get({url:`/system/role/get?id=`+t}),i=async t=>await e.post({url:`/system/role/create`,data:t}),a=async t=>await e.put({url:`/system/role/update`,data:t});export{a,n as i,r as n,t as r,i as t};

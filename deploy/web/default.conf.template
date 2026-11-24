@@ -1,0 +1,97 @@
+server {
+    listen 80;
+    server_name _;
+    root /opt/1panel/www/sites/louaq.net/index;
+    index index.html;
+    charset utf-8;
+    client_max_body_size 100m;
+
+    access_log /var/log/nginx/access.log;
+    error_log  /var/log/nginx/error.log warn;
+
+    # Internal build / crawl data must not be public.
+    location ^~ /data/ {
+        deny all;
+        return 404;
+    }
+    location ~ ^/(\.user\.ini|\.htaccess|\.git|\.env|\.svn|\.project|LICENSE|README\.md) {
+        return 404;
+    }
+
+    # ---------------- Static gallery ----------------
+    location ^~ /assets/ {
+        expires 7d;
+        access_log off;
+    }
+    location ^~ /images/ {
+        expires 365d;
+        access_log off;
+        try_files $uri =404;
+    }
+    location ^~ /files/ {
+        alias /opt/1panel/www/sites/louaq.net/files/;
+        expires 30d;
+        access_log off;
+    }
+    location ~* \.html$ {
+        expires -1;
+    }
+    location = /sitemap.xml {
+        expires 1h;
+    }
+
+    # ---------------- Admin SPA ----------------
+    location = /admin {
+        return 301 /admin/;
+    }
+    location ^~ /admin/ {
+        alias /usr/share/nginx/admin-ui/;
+        index index.html;
+        try_files $uri $uri/ /admin/index.html;
+        add_header Cache-Control "no-cache";
+    }
+
+    # ---------------- Admin API ----------------
+    location /admin-api/ {
+        proxy_pass http://admin-api:48080/admin-api/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 300s;
+        proxy_send_timeout 300s;
+        client_max_body_size 100m;
+    }
+
+    # SSE: task progress stream, never buffer it.
+    location /infra/sse/ {
+        proxy_pass http://admin-api:48080;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection '';
+        proxy_buffering off;
+        proxy_cache off;
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+    }
+
+    # ---------------- Search (Meilisearch) ----------------
+    # The master key is injected from the MEILI_MASTER_KEY environment variable
+    # by the official nginx entrypoint's envsubst step.
+    location = /search {
+        limit_except POST { deny all; }
+        proxy_pass http://meilisearch:7700/indexes/figures/search;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header Authorization "Bearer ${MEILI_MASTER_KEY}";
+        proxy_set_header Content-Type application/json;
+        proxy_hide_header Access-Control-Allow-Origin;
+        add_header Cache-Control "no-store" always;
+    }
+
+    error_page 404 /404.html;
+}

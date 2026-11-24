@@ -1,0 +1,1 @@
+var e=Object.prototype.toString,t=(t,n)=>e.call(t)===`[object ${n}]`,n=e=>t(e,`Number`),r=e=>t(e,`String`),i=e=>t(e,`Boolean`),a=e=>e&&Array.isArray(e),o=e=>{try{let{protocol:t}=new URL(e);return t===`http:`||t===`https:`}catch{return!1}},s=()=>window.matchMedia(`(prefers-color-scheme: dark)`).matches;export{r as a,n as i,i as n,o,s as r,a as t};
